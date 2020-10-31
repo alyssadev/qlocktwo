@@ -21,16 +21,14 @@ function buildClock() {
 
     for (let i = 0; i <= 9; i++) {
 //      const row = document.createElement("tr");
-        const row = document.createElement("span"),
-              newline = document.createElement("br");
+        const row = document.createElement("div");
         for (let j = 0; j <= 10; j++) {
 //          const cell = document.createElement("td");
-            const cell = document.createElement("span");
+            const cell = document.createElement("div");
 //          cell.style.textAlign = "center";
             cell.innerHTML = letters[i][j];
             row.appendChild(cell);
         }
-        row.appendChild(newline);
 
         clockArea.appendChild(row);
     }
@@ -60,6 +58,7 @@ function hideAll() {
 function showTime() {
     const it = [[0, 0], [0, 1]],
           is = [[0, 3], [0, 4]],
+          a = [[1, 0]],
           oclock = [[9, 5], [9, 6], [9, 7], [9, 8], [9, 9], [9, 10]],
           to = [[3, 9], [3, 10]],
           past = [[4, 0], [4, 1], [4, 2], [4, 3]],
@@ -98,6 +97,7 @@ function showTime() {
         showWord(ten);
         showWord(past);
     } else if (minute >= 13 && minute <= 17) { // xx:13 - xx:17
+        showWord(a);
         showWord(quarter);
         showWord(past);
     } else if (minute >= 18 && minute <= 22) { // xx:18 - xx:22
@@ -118,6 +118,7 @@ function showTime() {
         showWord(twenty);
         showWord(to);
     } else if (minute >= 43 && minute <= 47) { // xx:43 - xx:47
+        showWord(a);
         showWord(quarter);
         showWord(to);
     } else if (minute >= 48 && minute <= 52) { // xx:48 - xx:52
@@ -131,5 +132,5 @@ function showTime() {
     showWord(hours[hour % 12]);
 
     // calc update time
-    setTimeout(() => showTime(), 5000);
+    setTimeout(() => showTime(), 60*1000);
 }
