@@ -1,4 +1,4 @@
-let clock = null;
+let clockArea = null;
 
 function buildClock() {
     const letters = [
@@ -12,27 +12,31 @@ function buildClock() {
         ["F", "O", "U", "R", "F", "I", "V", "E", "T", "W", "O"], // 6
         ["E", "I", "G", "H", "T", "E", "L", "E", "V", "E", "N"], // 7
         ["S", "E", "V", "E", "N", "T", "W", "E", "L", "V", "E"], // 8
-        ["T", "E", "N", "S", "E", "O", "C", "L", "O", "C", "K"]  // 9
+        ["T", "E", "N", "S", "E", "O'", "C", "L", "O", "C", "K"]  // 9
     ];
-    const clockArea = document.getElementById("clock");
+    clockArea = document.getElementById("clock");
 
     // create table
-    clock = document.createElement("table");
+//  clock = document.createElement("table");
 
     for (let i = 0; i <= 9; i++) {
-        const row = document.createElement("tr");
+//      const row = document.createElement("tr");
+        const row = document.createElement("span"),
+              newline = document.createElement("br");
         for (let j = 0; j <= 10; j++) {
-            const cell = document.createElement("td");
-            cell.style.textAlign = "center";
+//          const cell = document.createElement("td");
+            const cell = document.createElement("span");
+//          cell.style.textAlign = "center";
             cell.innerHTML = letters[i][j];
             row.appendChild(cell);
         }
+        row.appendChild(newline);
 
-        clock.appendChild(row);
+        clockArea.appendChild(row);
     }
 
     // append
-    clockArea.appendChild(clock);
+//  clockArea.appendChild(clock);
 }
 
 function getItem(i, j) {
@@ -41,14 +45,14 @@ function getItem(i, j) {
 
 function showWord(word) {
     for (let i = 0; i <= word.length - 1; i++) {
-        getItem(word[i][0], word[i][1]).style.color = "black";
+        getItem(word[i][0], word[i][1]).classList.add("selected");
     }
 }
 
 function hideAll() {
     for (let i = 0; i <= 9; i++) {
         for (let j = 0; j <= 10; j++) {
-            getItem(i, j).style.color = "lightgray";
+            getItem(i, j).classList.remove("selected");
         }
     }
 }
@@ -56,7 +60,7 @@ function hideAll() {
 function showTime() {
     const it = [[0, 0], [0, 1]],
           is = [[0, 3], [0, 4]],
-          oclock = [[9, 8], [9, 9], [9, 10]],
+          oclock = [[9, 5], [9, 6], [9, 7], [9, 8], [9, 9], [9, 10]],
           to = [[3, 9], [3, 10]],
           past = [[4, 0], [4, 1], [4, 2], [4, 3]],
           half = [[3, 0], [3, 1], [3, 2], [3, 3]],
@@ -94,7 +98,7 @@ function showTime() {
         showWord(ten);
         showWord(past);
     } else if (minute >= 13 && minute <= 17) { // xx:13 - xx:17
-        showWord(fifteen);
+        showWord(quarter);
         showWord(past);
     } else if (minute >= 18 && minute <= 22) { // xx:18 - xx:22
         showWord(twenty);
