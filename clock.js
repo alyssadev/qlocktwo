@@ -2,16 +2,17 @@ let clock = null;
 
 function buildClock() {
     const letters = [
-        ["E", "S", "K", "I", "S", "T", "A", "F", "Ü", "N", "F"],
-        ["Z", "E", "H", "N", "Z", "W", "A", "N", "Z", "I", "G"],
-        ["D", "R", "E", "I", "V", "I", "E", "R", "T", "E", "L"],
-        ["V", "O", "R", "F", "U", "N", "K", "N", "A", "C", "H"],
-        ["H", "A", "L", "B", "A", "E", "L", "F", "Ü", "N", "F"],
-        ["E", "I", "N", "S", "X", "Ä", "M", "Z", "W", "E", "I"],
-        ["D", "R", "E", "I", "A", "U", "J", "V", "I", "E", "R"],
-        ["S", "E", "C", "H", "S", "N", "L", "A", "C", "H", "T"],
-        ["S", "I", "E", "B", "E", "N", "Z", "W", "Ö", "L", "F"],
-        ["Z", "E", "H", "N", "E", "U", "N", "K", "U", "H", "R"]
+      //  0    1    2    3    4    5    6    7    8    9   10
+        ["I", "T", "L", "I", "S", "A", "S", "A", "M", "P", "M"], // 0
+        ["A", "C", "Q", "U", "A", "R", "T", "E", "R", "D", "C"], // 1
+        ["T", "W", "E", "N", "T", "Y", "F", "I", "V", "E", "X"], // 2
+        ["H", "A", "L", "F", "S", "T", "E", "N", "F", "T", "O"], // 3
+        ["P", "A", "S", "T", "E", "R", "U", "N", "I", "N", "E"], // 4
+        ["O", "N", "E", "S", "I", "X", "T", "H", "R", "E", "E"], // 5
+        ["F", "O", "U", "R", "F", "I", "V", "E", "T", "W", "O"], // 6
+        ["E", "I", "G", "H", "T", "E", "L", "E", "V", "E", "N"], // 7
+        ["S", "E", "V", "E", "N", "T", "W", "E", "L", "V", "E"], // 8
+        ["T", "E", "N", "S", "E", "O", "C", "L", "O", "C", "K"]  // 9
     ];
     const clockArea = document.getElementById("clock");
 
@@ -53,91 +54,77 @@ function hideAll() {
 }
 
 function showTime() {
+    const it = [[0, 0], [0, 1]],
+          is = [[0, 3], [0, 4]],
+          oclock = [[9, 8], [9, 9], [9, 10]],
+          to = [[3, 9], [3, 10]],
+          past = [[4, 0], [4, 1], [4, 2], [4, 3]],
+          half = [[3, 0], [3, 1], [3, 2], [3, 3]],
+          one = [[5, 0], [5, 1], [5, 2]],
+          two = [[6, 8], [6, 9], [6, 10]],
+          three = [[5, 6], [5, 7], [5, 8], [5, 9], [5, 10]],
+          four = [[6, 0], [6, 1], [6, 2], [6, 3]],
+          five = [[2, 6], [2, 7], [2, 8], [2, 9]],
+          six = [[5, 3], [5, 4], [5, 5]],
+          seven = [[8, 0], [8, 1], [8, 2]],
+          eight = [[7, 0], [7, 1], [7, 3]],
+          nine = [[4, 7], [4, 8], [4, 9]],
+          ten = [[3, 5], [3, 6], [3, 7]],
+          eleven = [[7, 5], [7, 6], [7, 7], [7, 8], [7, 9], [7, 10]],
+          twelve = [[8, 5], [8, 6], [8, 7], [8, 8], [8, 9], [8, 10]],
+          quarter = [[1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7], [1, 8]],
+          twenty = [[2, 0], [2, 1], [2, 2], [2, 3], [2, 4], [2, 5]],
+          hours = [twelve, one, two, three, four, five, six, seven, eight, nine, ten, eleven];
+
     hideAll();
 
-    showWord([[0, 0], [0, 1]]);         // ES
-    showWord([[0, 3], [0, 4], [0, 5]]); // IST
+    showWord(it);
+    showWord(is);
 
-    const minute = [
-        [[9, 8], [9, 9], [9, 10]],                                                                 // UHR
-        [[0, 7], [0, 8], [0, 9], [0, 10]],                                                         // FÜNF
-        [[1, 0], [1, 1], [1, 2], [1, 3]],                                                          // ZEHN
-        [[2, 4], [2, 5], [2, 6], [2, 7], [2, 8], [2, 9], [2, 10]],                                 // VIERTEL
-        [[1, 4], [1, 5], [1, 6], [1, 7], [1, 8], [1, 9], [1, 10]],                                 // ZWANZIG
-        [[2, 0], [2, 1], [2, 2], [2, 3], [2, 4], [2, 5], [2, 6], [2, 7], [2, 8], [2, 9], [2, 10]], // DREIVIERTEL
-    ];
+    const d = new Date();
+    let hour = d.getHours(),
+        minute = d.getMinutes();
 
-    const before = [[3, 0], [3, 1], [3, 2]];        // VOR
-    const past = [[3, 7], [3, 8], [3, 9], [3, 10]]; // NACH
-
-    const half = [[4, 0], [4, 1], [4, 2], [4, 3]];  // HALB
-
-    const hour = [
-        [[5, 0], [5, 1], [5, 2], [5, 3]],                 // EINS
-        [[5, 7], [5, 8], [5, 9], [5, 10]],                // ZWEI
-        [[6, 0], [6, 1], [6, 2], [6, 3]],                 // DREI
-        [[6, 7], [6, 8], [6, 9], [6, 10]],                // VIER
-        [[4, 7], [4, 8], [4, 9], [4, 10]],                // FÜNF
-        [[7, 0], [7, 1], [7, 2], [7, 3], [7, 4]],         // SECHS
-        [[8, 0], [8, 1], [8, 2], [8, 3], [8, 4], [8, 5]], // SIEBEN
-        [[7, 7], [7, 8], [7, 9], [7, 10]],                // ACHT
-        [[9, 3], [9, 4], [9, 5], [9, 6]],                 // NEUN
-        [[9, 0], [9, 1], [9, 2], [9, 3]],                 // ZEHN
-        [[4, 5], [4, 6], [4, 7]],                         // ELF
-        [[8, 6], [8, 7], [8, 8], [8, 9], [8, 10]],        // ZWÖLF
-        [[5, 0], [5, 1], [5, 2]],                         // EIN
-    ];
-
-    const d = new Date()
-    let curHour = d.getHours();
-    const curMinute = d.getMinutes();
-
-    if (curMinute >= 58 || curMinute <= 2) { // xx:58 - xx:02
-        showWord(minute[0]); // UHR
-    } else if (curMinute >= 3 && curMinute <= 7) { // xx:03 - xx:07
-        showWord(minute[1]); // FÜNF
-        showWord(past);      // NACH
-    } else if (curMinute >= 8 && curMinute <= 12) { // xx:08 - xx:12
-        showWord(minute[2]); // ZEHN
-        showWord(past);      // NACH
-    } else if (curMinute >= 13 && curMinute <= 17) { // xx:13 - xx:17
-        showWord(minute[3]); // VIERTEL
-        showWord(past);      // NACH
-    } else if (curMinute >= 18 && curMinute <= 22) { // xx:18 - xx:22
-        showWord(minute[4]); // ZWANZIG
-        showWord(past);      // NACH
-    } else if (curMinute >= 23 && curMinute <= 27) { // xx:23 - xx:27
-        showWord(minute[1]); // FÜNF
-        showWord(before);    // VOR
-        showWord(half);      // HALB
-    } else if (curMinute >= 28 && curMinute <= 32) { // xx:28 - xx:32
-        showWord(half);      // HALB
-    } else if (curMinute >= 33 && curMinute <= 37) { // xx:33 - xx:37
-        showWord(minute[1]); // FÜNF
-        showWord(past);      // NACH
-        showWord(half);      // HALB
-    } else if (curMinute >= 38 && curMinute <= 42) { // xx:38 - xx:42
-        showWord(minute[4]); // ZWANZIG
-        showWord(before);    // VOR
-    } else if (curMinute >= 43 && curMinute <= 47) { // xx:43 - xx:47
-        showWord(minute[5]); // DREIVIERTEL
-    } else if (curMinute >= 48 && curMinute <= 52) { // xx:48 - xx:52
-        showWord(minute[2]); // ZEHN
-        showWord(before);    // VOR
-    } else if (curMinute >= 53 && curMinute <= 57) { // xx:53 - xx:57
-        showWord(minute[1]); // FÜNF
-        showWord(before);    // VOR
+    if (minute >= 58 || minute <= 2) { // xx:58 - xx:02
+        showWord(oclock);
+    } else if (minute >= 3 && minute <= 7) { // xx:03 - xx:07
+        showWord(five);
+        showWord(past);
+    } else if (minute >= 8 && minute <= 12) { // xx:08 - xx:12
+        showWord(ten);
+        showWord(past);
+    } else if (minute >= 13 && minute <= 17) { // xx:13 - xx:17
+        showWord(fifteen);
+        showWord(past);
+    } else if (minute >= 18 && minute <= 22) { // xx:18 - xx:22
+        showWord(twenty);
+        showWord(past);
+    } else if (minute >= 23 && minute <= 27) { // xx:23 - xx:27
+        showWord(twenty);
+        showWord(five);
+        showWord(past);
+    } else if (minute >= 28 && minute <= 32) { // xx:28 - xx:32
+        showWord(half);
+        showWord(past);
+    } else if (minute >= 33 && minute <= 37) { // xx:33 - xx:37
+        showWord(twenty);
+        showWord(five)
+        showWord(to);
+    } else if (minute >= 38 && minute <= 42) { // xx:38 - xx:42
+        showWord(twenty);
+        showWord(to);
+    } else if (minute >= 43 && minute <= 47) { // xx:43 - xx:47
+        showWord(quarter);
+        showWord(to);
+    } else if (minute >= 48 && minute <= 52) { // xx:48 - xx:52
+        showWord(ten);
+        showWord(to);
+    } else if (minute >= 53 && minute <= 57) { // xx:53 - xx:57
+        showWord(five);
+        showWord(to);
     }
 
-    if (curMinute >= 23) {
-        curHour++;
-    }
-
-    if (curHour == 1 && (curMinute >= 58 || curMinute <= 2)) { // EIN UHR / nicht "EINS UHR"
-        showWord(hour[12]);
-    } else {
-        showWord(hour[((curHour - 1) + 12) % 12]);
-    }
+    showWord(hour[hour % 12]);
 
     // calc update time
     setTimeout(() => showTime(), 5000);
