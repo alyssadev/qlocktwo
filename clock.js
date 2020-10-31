@@ -124,7 +124,7 @@ function showTime() {
         showWord(to);
     }
 
-    showWord(hour[hour % 12]);
+    showWord(hours[hour % 12]);
 
     // calc update time
     setTimeout(() => showTime(), 5000);
